@@ -1,0 +1,58 @@
+# Barrage 
+written by wucheng modified by mask
+
+Barrage 弹幕是吴成同学做滴，可以字号和字色随机组合，我修改成每一行都是一个class的方式
+
+
+
+-----
+
+## 使用方法
+```
+CACHEMSG=[];
+
+CACHEMSG.push("期待张翰");
+CACHEMSG.push("霸道总裁变霸道捕快了哈哈");
+CACHEMSG.push("魔幻特效很过瘾啊啊啊啊");
+CACHEMSG.push("颜值爆表，舔屏中");
+
+barrage = $('#chatBlock').Barrage({
+	className : [ 'line1' , 'line2', 'line3', 'line3', 'line4', 'line5' ]
+});
+
+function infiniteSend(){
+	setTimeout(function(){
+		infiniteSend();
+	},Math.random()*600+500);
+
+	var id = Math.ceil(Math.random()*window.CACHEMSG.length);
+	var msg = window.CACHEMSG[id];
+	// console.log(msg,id);
+	barrage.appendMsg(msg);
+}
+setTimeout(function(){
+	infiniteSend();
+}, 800)
+```
+
+
+如果发自己说的话，会立马显示，默认class名为line_me。不参与服务器的敏感字过滤，方法如下
+```
+barrage.appendMsg(msg,true);
+```
+
+默认参数
+```
+var setting = {
+	fontSize : [ 30  ]  ,
+	fontColor : [ "3db35c", "ffcd02" , "ff5d37" , "3db35c" ] ,
+	padding : 20 ,
+	heightOffset : 26 ,
+	leftRange : 0 ,
+	maxLeftWidth : 2000 ,
+	removeWidth : -100 , 
+	heightPre : 80 , 
+	moveTime : 800 ,
+	delayTime : 157
+} ;
+```
