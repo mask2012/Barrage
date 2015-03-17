@@ -1,7 +1,7 @@
 # Barrage 
 written by wucheng modified by mask
 
-Barrage 弹幕是吴成同学做滴，可以字号和字色随机组合，我修改成每一行都是一个class的方式
+Barrage 弹幕是吴成同学做滴，可以字号和字色随机组合，我修改成每一行都是一个class的方式, [演示demo](http://mask2012.github.io/Barrage/index.html)
 
 
 
