@@ -56,7 +56,8 @@
 			removeWidth : -100 , 
 			heightPre : 80 , 
 			moveTime : 800 ,
-			delayTime : 157
+			delayTime : 157,
+			hasPhoto:false
 		} ;
 		
 		$.extend( setting , opt );
@@ -75,51 +76,100 @@
 		/**
 		 * 	待形成消息模版！
 		 */
-		this.appendMsg = function( msg,me ){
-			if( !msg )
-				return ;
-			var fontSize = this.randSize() ;
-			var fontColor = this.randColor() ;
-			var className = this.randClassname() ;
-			var msgLength = msg.length ;
-			var msgWidth = msgLength * fontSize ;
-			var leftWidth = this.getLastLeft() || width ;
-			var msgDiv = $($("<div>").appendTo( this ));
-			msgDiv.attr("id", lastEleKeyPre + msgIndex );
-			//left: 0px; top: 50px;
-			if( leftWidth > setting.maxLeftWidth )
-				leftWidth = leftWidth%setting.maxLeftWidth + width ;
-			
-			if(me){
-				msgDiv.attr("class", 'line_me');
-			}else{
-				msgDiv.attr("class", className);
-			}
-			msgDiv.css({
-				"position" : "absolute" ,
-				"display" : "block" ,
-				"left": Math.floor(Math.random()*setting.leftRange) + leftWidth + "px",
-				"top" : (height-startHeight + fontSize )  + "px" ,
-				//"width": msgWidth>150?msgWidth*1.2:msgWidth +"px" ,//是否换行,0.x
-				"width": msgWidth + 30 +"px" ,
-				"padding" : setting.paading + "px" , 
-				// "fontSize" : fontSize  + "px" ,
-				// "color" : "#" + fontColor 
-			});
-			
-			startHeight = startHeight - fontSize - setting.heightOffset ;
-			msgIndex ++ ;
-			if( startHeight <= setting.heightPre ){
-				startHeight = height ;
-				msgIndex = 0 ;
-			}
-			msgDiv.text( msg );
-			//setTimeout(function(){
-			msgDiv.animate({"left": (0 - msgWidth + setting.removeWidth )+"px" }, this.calTime( msgWidth + leftWidth ) ,"linear",function(){
-				$(this).remove() ;
-			}) ; 
-			//}, setting.delayTime );
-		};
+
+		if(setting.hasPhoto){
+			this.appendMsg = function( msg,src,me ){
+				if( !msg )
+					return ;
+				var fontSize = this.randSize() ;
+				var fontColor = this.randColor() ;
+				var className = this.randClassname() ;
+				var msgLength = msg.length ;
+				var msgWidth = msgLength * fontSize ;
+				var leftWidth = this.getLastLeft() || width ;
+				var msgDiv = $($("<div>").appendTo( this ));
+				msgDiv.attr("id", lastEleKeyPre + msgIndex );
+				//left: 0px; top: 50px;
+				if( leftWidth > setting.maxLeftWidth )
+					leftWidth = leftWidth%setting.maxLeftWidth + width ;
+				
+				if(me){
+					msgDiv.attr("class", 'line_me');
+				}else{
+					msgDiv.attr("class", className);
+				}
+				msgDiv.css({
+					"position" : "absolute" ,
+					"display" : "block" ,
+					"left": Math.floor(Math.random()*setting.leftRange) + leftWidth + "px",
+					"top" : (height-startHeight + fontSize )  + "px" ,
+					//"width": msgWidth>150?msgWidth*1.2:msgWidth +"px" ,//是否换行,0.x
+					"width": msgWidth + 30 +"px" ,
+					"padding" : setting.paading + "px" , 
+					// "fontSize" : fontSize  + "px" ,
+					// "color" : "#" + fontColor 
+				});
+				
+				startHeight = startHeight - fontSize - setting.heightOffset ;
+				msgIndex ++ ;
+				if( startHeight <= setting.heightPre ){
+					startHeight = height ;
+					msgIndex = 0 ;
+				}
+				msgDiv.html("<span><img src="+src+"></span>"+msg );
+				//setTimeout(function(){
+				msgDiv.animate({"left": (0 - msgWidth + setting.removeWidth )+"px" }, this.calTime( msgWidth + leftWidth ) ,"linear",function(){
+					$(this).remove() ;
+				}) ; 
+				//}, setting.delayTime );
+			};
+		}else{
+			this.appendMsg = function( msg,me ){
+				if( !msg )
+					return ;
+				var fontSize = this.randSize() ;
+				var fontColor = this.randColor() ;
+				var className = this.randClassname() ;
+				var msgLength = msg.length ;
+				var msgWidth = msgLength * fontSize ;
+				var leftWidth = this.getLastLeft() || width ;
+				var msgDiv = $($("<div>").appendTo( this ));
+				msgDiv.attr("id", lastEleKeyPre + msgIndex );
+				//left: 0px; top: 50px;
+				if( leftWidth > setting.maxLeftWidth )
+					leftWidth = leftWidth%setting.maxLeftWidth + width ;
+				
+				if(me){
+					msgDiv.attr("class", 'line_me');
+				}else{
+					msgDiv.attr("class", className);
+				}
+				msgDiv.css({
+					"position" : "absolute" ,
+					"display" : "block" ,
+					"left": Math.floor(Math.random()*setting.leftRange) + leftWidth + "px",
+					"top" : (height-startHeight + fontSize )  + "px" ,
+					//"width": msgWidth>150?msgWidth*1.2:msgWidth +"px" ,//是否换行,0.x
+					"width": msgWidth + 30 +"px" ,
+					"padding" : setting.paading + "px" , 
+					// "fontSize" : fontSize  + "px" ,
+					// "color" : "#" + fontColor 
+				});
+				
+				startHeight = startHeight - fontSize - setting.heightOffset ;
+				msgIndex ++ ;
+				if( startHeight <= setting.heightPre ){
+					startHeight = height ;
+					msgIndex = 0 ;
+				}
+				msgDiv.text( msg );
+				//setTimeout(function(){
+				msgDiv.animate({"left": (0 - msgWidth + setting.removeWidth )+"px" }, this.calTime( msgWidth + leftWidth ) ,"linear",function(){
+					$(this).remove() ;
+				}) ; 
+				//}, setting.delayTime );
+			};
+		}
 		
 		this.randSize = function(){
 			//return setting.fontSize[new Date().getTime()%Math.floor(Math.random()*879421)%setting.fontSize.length] ;
